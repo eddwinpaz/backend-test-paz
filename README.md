@@ -9,6 +9,16 @@ The only thing needed to make it work is to bash onto Web Container and migrate 
 - Flower
 - Django (Container A.K.A Web Container)
 
+## Unit testing
+
+- Just made Unit testing for user module
+- You need to bash web container to run this command:
+
+```
+./manage.py test --pattern="tests_*.py"
+```
+
+
 ## NOTES: 
 - Application has my own personal Webhook Slack URL - change it to yours
 
