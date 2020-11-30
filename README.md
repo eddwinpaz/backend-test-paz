@@ -16,7 +16,7 @@ The only thing needed to make it work is to bash onto Web Container and migrate 
 your own TWILIO ACCOUNT SID AND AUTH TOKEN to make it work.
 
 
-Please type following command:
+Please type following command: (Right off the bat it works...)
 
 ```
 docker-compose build && docker-compose up -d
