@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.1/tailwind.min.css">
+</head>
+
+<body>
+<div class="container mx-auto">
+    {% if menu_list %}
+    <img class="mx-auto h-12 w-auto mt-10" src="{% static '/logo.png' %}" alt="Workflow">
+    <div class="uppercase font-bold mt-10">Admin Menu</div>
+    {% for menu in menu_list %}
+
+    <div class="p-2 mt-5 border pt-3 pl-3 pr-3 pb-0">
+        <div class="flex justify-between">
+            <div class="flex flex-col">
+                <a class="text-black text-small font-bold pb-1 uppercase" href="/menu/{{ menu.menu_id }}">{{ menu.name }}</a>
+                <div class="text-grey-500 pt-1 text-xs mb-5">
+                    <div class="mb-5">{{ menu.description}}</div>
+                    <div>
+                        <a href="/menu/delete/{{ menu.menu_id }}"
+                           class="rounded-md border ml-0 bg-red-500 p-3 pt-2 pb-2 text-white text-sm m-1">
+                            Delete 
+                        </a>
+
+                        <a href="/menu/update/{{ menu.menu_id }}"
+                           class="rounded-md border ml-0 bg-black p-3 pt-2 pb-2 text-white text-sm m-1">
+                            Modify 
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lowercase font-light text-sm flex flex-row items-center justify-start whitespace-no-wrap">
+                <div class="flex flex-row items-center justify-start text-black">
+                    <span class="text-grey-500 pt-1 text-xs font-semibold">Expires: {{menu.expire_date}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <div class="text-center">No Menus available for today's date.</div>
+    {% endif %}
+</div>
+</body>
+</html>
+

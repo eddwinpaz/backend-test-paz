@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./delivery
+    command: python manage.py runserver 0.0.0.0:7000
+    volumes:
+      - ./delivery/:/usr/src/app/
+    ports:
+      - 7000:7000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=goodpassword
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+    depends_on:
+      - redis
+  redis:
+    image: redis:alpine
+  celery:
+    build: ./delivery
+    command: celery worker --app=core --loglevel=info --logfile=logs/celery.log
+    volumes:
+      - ./delivery/:/usr/src/app/
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=goodpassword
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - SLACK_WEBHOOK_URI=https://hooks.slack.com/services/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
+    depends_on:
+      - redis
+  celery-beat:
+    build: ./delivery
+    command: celery -A core beat -l info
+    volumes:
+      - ./delivery/:/usr/src/app/
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=goodpassword
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+  dashboard:
+    build: ./delivery
+    command: flower -A core --port=5555 --broker=redis://redis:6379/0
+    ports:
+      - 5555:5555
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=goodpassword
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+      - celery
