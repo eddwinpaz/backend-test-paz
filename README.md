@@ -1,6 +1,6 @@
 To install Application.
 
-This a Django Application that uses Clean Architecture. Other Samples made in Golang here:  https://github.com/eddwinpaz/svc-customer :)
+This is a Django Application that uses Clean Architecture. Other Samples made in Golang here:  https://github.com/eddwinpaz/svc-customer :)
 
 The only thing needed to make it work is to bash onto Web Container and migrate models.
 - Celery
