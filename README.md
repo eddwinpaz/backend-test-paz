@@ -1,5 +1,19 @@
 To install Application.
 
+The only thing needed to make it work is to bash onto Web Container and migrate models.
+- Celery
+- Celery Beat
+- Redis
+- Flower
+- Django (Container A.K.A Web Container)
+
+## NOTES: 
+- Application has my own personal Webhook Slack URL - change it to yours
+
+- Aplication Whatsapp Broadcast are part of Twilio's SaaS so you need to provide
+your own TWILIO ACCOUNT SID AND AUTH TOKEN to make it work.
+
+
 Please type following command:
 
 ```
@@ -13,6 +27,10 @@ python manage.py makemigrations && python manage.py migrate
 ```
 
 # Normal user URLS
+
+login create:
+
+http://localhost:7000/user/create/
 
 login user:
 
